@@ -7,6 +7,7 @@ import { applyMiddleware, createStore } from "redux";
 import { postReducer } from "./reducer";
 import { Provider } from "react-redux";
 import thunk from "redux-thunk";
+import '@coreui/coreui/dist/css/coreui.min.css'
 
 const store = createStore(postReducer, applyMiddleware(thunk));
 const root = ReactDOM.createRoot(document.getElementById("root"));

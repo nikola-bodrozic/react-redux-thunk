@@ -1,18 +1,7 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchUsers, fetchPosts } from "./actions";
-import Tooltip from 'rc-tooltip';
-import 'rc-tooltip/assets/bootstrap_white.css';
-
-const styles = {
-  display: 'table-cell',
-  height: '60px',
-  width: '80px',
-  textAlign: 'center',
-  background: '#f6f6f6',
-  verticalAlign: 'middle',
-  border: '5px solid white',
-};
+import { CTooltip } from '@coreui/react'
 
 const Posts = () => {
   const disp = useDispatch();
@@ -28,19 +17,27 @@ const Posts = () => {
 
   const renderUsers = () => {
     if (state.loading) return <p>Loading...</p>;
-    
-    return state.items.map((user) => (<div key={user.id}>
-      <Tooltip
-        placement="right"
-        overlay={renderToolTip(state.postTitles)}
-        arrowContent={<div className="rc-tooltip-arrow-inner"></div>}
-        onVisibleChange={() => getPostsIds(user.id)}
-      >
-        <a href="#" style={styles}>{user.name}</a>
-      </Tooltip></div>));
+
+    return state.items.map((user) => (
+      <CTooltip placement="right" content={renderToolTip(state.postTitles)} onShow={() => {getPostsIds(user.id)}}>
+        <div style={styles.itemHolder}>{user.name}</div>
+      </CTooltip>)
+    );
   };
 
   return <div>{renderUsers()}</div>
 };
 
 export default Posts;
+
+const styles = {
+  itemHolder: {
+    border: '1px solid rgba(0,255,0,0.3)', 
+    width:'300px', 
+    display: 'flex',
+    padding: '5px',
+    margin: '5px',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+};
